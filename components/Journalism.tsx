@@ -6,50 +6,50 @@ const articles = [
   {
     id: '21122',
     title: "Can the Cinematic Drama Survive in the Modern Era?",
-    date: "April 30, 2022",
+    date: "April 30th, 2022",
     description: "An analysis of the shifting landscape of cinema and the challenges facing serious dramatic storytelling in the age of blockbusters.",
     url: "https://www.london-now.co.uk/young-reporter/21122/",
-    image: null // Add image URL here if you have one
+    image: https://www.london-now.co.uk/resources/images/13732241.jpg?type=mds-article-962 // Add image URL here if you have one
   },
   {
     id: '21124', 
-    title: "Article Title Needed (April 2022)", // <--- PLEASE UPDATE THIS TITLE
-    date: "April 2022",
+    title: "Why Are Emily Dickinson's Poems Still Studied in the Modern Era?", // <--- PLEASE UPDATE THIS TITLE
+    date: "April 30th 2022",
     description: "Reporting on local events and community initiatives as part of the Young Reporter scheme.",
     url: "https://www.london-now.co.uk/young-reporter/21124/",
-    image: null
+    image: https://www.london-now.co.uk/resources/images/13732256.jpg?type=mds-article-962
   },
   {
     id: '19902',
     title: "Wife of Willesden Review: A Delightful Reimagining of a Classic Chaucer Tale",
-    date: "Dec 28, 2021",
+    date: "Dec 28th, 2021",
     description: "Reviewing Zadie Smith’s adaptation of The Wife of Bath, exploring how it bridges contemporary slang with Shakespearean roots.",
     url: "https://www.london-now.co.uk/young-reporter/19902/",
-    image: null
+    image: https://www.london-now.co.uk/resources/images/13334066.jpg?type=mds-article-962
   },
   {
     id: '19263',
     title: "Eternals Represents the Next Step Forward for Disney's Diversity",
-    date: "Nov 5, 2021",
+    date: "Nov 5th, 2021",
     description: "Examining Marvel's Eternals as a pivotal moment for representation in mainstream superhero media.",
     url: "https://www.london-now.co.uk/young-reporter/19263/",
-    image: null
+    image: https://www.london-now.co.uk/resources/images/13246606.jpg?type=mds-article-962
   },
   {
     id: '19337',
-    title: "Article Title Needed (Nov 2021)", // <--- PLEASE UPDATE THIS TITLE
-    date: "Nov 2021",
+    title: "Lion Learning At Hampton School Sparks Passion in Local Primary Students", // <--- PLEASE UPDATE THIS TITLE
+    date: "Nov 29th 2021",
     description: "Coverage of local news and student perspectives for the London Now publication.",
     url: "https://www.london-now.co.uk/young-reporter/19337/",
-    image: null
+    image: https://www.london-now.co.uk/resources/images/13250205.jpg?type=mds-article-962
   },
   {
     id: '18897',
     title: "Pledges For The Planet: School Eco-Club Begins Bold Plan of Climate Action",
-    date: "Oct 2021",
+    date: "Oct 21st 2021",
     description: "Highlighting student-led environmental initiatives and the impact of local eco-clubs on community awareness.",
     url: "https://www.london-now.co.uk/young-reporter/18897/",
-    image: null
+    image: https://www.london-now.co.uk/resources/images/13127187.jpg?type=mds-article-962
   }
 ];
 
