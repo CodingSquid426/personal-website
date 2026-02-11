@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Edit3, GitCommit, ArrowRight, Clock, Award, FileText, Calendar, ChevronDown, ChevronRight, Eye, Star } from 'lucide-react';
+import { Edit3, GitCommit, ArrowRight, Clock, Award, FileText, Calendar, ChevronDown, ChevronRight, Eye, Star, TrendingUp, BarChart3 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface WikiEdit {
@@ -36,10 +36,11 @@ const WikipediaEdits: React.FC = () => {
   const [groupedEdits, setGroupedEdits] = useState<DailyEdits[]>([]);
   const [stats, setStats] = useState<WikiStats | null>(null);
   const [featuredArticles, setFeaturedArticles] = useState<FeaturedArticle[]>([]);
+  const [totalLifetimeViews, setTotalLifetimeViews] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const [expandedDates, setExpandedDates] = useState<Set<string>>(new Set());
+  
   const username = "Squid45"; 
-
   const featuredTitles = [
     "The_Muppet_Show_(2026_TV_special)",
     "Star_(Disney+)",
@@ -59,7 +60,7 @@ const WikipediaEdits: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // --- Existing Stats & Edits Logic ---
+        // --- 1. Basic User Stats & Recent Edits ---
         const editsRes = await fetch(
           `https://en.wikipedia.org/w/api.php?action=query&list=usercontribs&ucuser=${username}&uclimit=50&ucprop=title|timestamp|comment|ids&format=json&origin=*`
         );
@@ -70,12 +71,35 @@ const WikipediaEdits: React.FC = () => {
         );
         const userData = await userRes.json();
 
+        // --- 2. Created Articles (for Count & Lifetime Views) ---
+        // Fetch ALL created articles (Mainspace only: ucnamespace=0)
         const createdRes = await fetch(
-          `https://en.wikipedia.org/w/api.php?action=query&list=usercontribs&ucuser=${username}&ucshow=new&uclimit=500&format=json&origin=*`
+          `https://en.wikipedia.org/w/api.php?action=query&list=usercontribs&ucuser=${username}&ucshow=new&ucnamespace=0&uclimit=500&format=json&origin=*`
         );
         const createdData = await createdRes.json();
+        const createdArticles = createdData.query?.usercontribs || [];
 
-        // Process Edits
+        // --- 3. Calculate Lifetime Views (Impact) ---
+        // We fetch pageviews for every article the user CREATED.
+        const todayStr = new Date().toISOString().slice(0,10).replace(/-/g,'');
+        
+        const viewPromises = createdArticles.map(async (article: any) => {
+          try {
+            const url = `https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/${encodeURIComponent(article.title)}/monthly/2015010100/${todayStr}00`;
+            const res = await fetch(url);
+            if (!res.ok) return 0;
+            const data = await res.json();
+            return data.items ? data.items.reduce((acc: number, item: any) => acc + item.views, 0) : 0;
+          } catch (e) {
+            return 0;
+          }
+        });
+
+        const viewsResults = await Promise.all(viewPromises);
+        const totalViews = viewsResults.reduce((acc, views) => acc + views, 0);
+        setTotalLifetimeViews(totalViews);
+
+        // --- 4. Process Recent Edits Groups ---
         if (editsData.query?.usercontribs) {
           const rawEdits: WikiEdit[] = editsData.query.usercontribs;
           const groups: Record<string, WikiEdit[]> = {};
@@ -105,47 +129,34 @@ const WikipediaEdits: React.FC = () => {
           if (sortedDays.length > 0) setExpandedDates(new Set([sortedDays[0].isoDate]));
         }
 
-        // Process Stats
+        // --- 5. Set Stats State ---
         if (userData.query?.users?.[0]) {
           const user = userData.query.users[0];
-          const createdCount = createdData.query?.usercontribs?.length || 0;
-          
           setStats({
             editCount: user.editcount || 0,
             registrationDate: user.registration,
             groups: user.groups || [],
-            articlesCreated: createdCount >= 500 ? 500 : createdCount
+            articlesCreated: createdArticles.length >= 500 ? 500 : createdArticles.length
           });
         }
 
-        // --- New Featured Articles Logic ---
+        // --- 6. Fetch Featured Articles Details ---
         const featuredData = await Promise.all(featuredTitles.map(async (title) => {
           try {
-            // 1. Fetch Metadata (Intro, Image, URL, First Revision for Creation Date)
+            // Metadata
             const metaUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=extracts|pageimages|info|revisions&titles=${encodeURIComponent(title)}&pithumbsize=600&exintro&explaintext&inprop=url&rvlimit=1&rvdir=newer&rvprop=timestamp`;
             const metaRes = await fetch(metaUrl);
             const metaJson = await metaRes.json();
             
             const pageId = Object.keys(metaJson.query.pages)[0];
             const page = metaJson.query.pages[pageId];
-
             if (page.missing) return null;
 
-            // 2. Fetch Lifetime Views (Pageviews API)
-            // Start date: 20150701 (API start) to Today
-            const today = new Date().toISOString().slice(0,10).replace(/-/g,'');
-            const viewsUrl = `https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/${encodeURIComponent(title)}/monthly/2015070100/${today}00`;
-            
-            let totalViews = 0;
-            try {
-              const viewsRes = await fetch(viewsUrl);
-              const viewsJson = await viewsRes.json();
-              if (viewsJson.items) {
-                totalViews = viewsJson.items.reduce((acc: number, item: any) => acc + item.views, 0);
-              }
-            } catch (e) {
-              console.warn(`Could not fetch views for ${title}`, e);
-            }
+            // Lifetime Views (Specific for these 3)
+            const viewsUrl = `https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/${encodeURIComponent(title)}/monthly/2015070100/${todayStr}00`;
+            const viewsRes = await fetch(viewsUrl);
+            const viewsJson = await viewsRes.json();
+            const lifetimeViews = viewsJson.items ? viewsJson.items.reduce((acc: number, item: any) => acc + item.views, 0) : 0;
 
             return {
               title: page.title,
@@ -153,7 +164,7 @@ const WikipediaEdits: React.FC = () => {
               imageUrl: page.thumbnail?.source,
               url: page.fullurl,
               creationDate: page.revisions?.[0]?.timestamp,
-              lifetimeViews: totalViews
+              lifetimeViews
             } as FeaturedArticle;
 
           } catch (error) {
@@ -189,10 +200,38 @@ const WikipediaEdits: React.FC = () => {
           Wikipedia Contributions
         </h3>
 
+        {/* Prominent Lifetime Views Box */}
+        <div className="bg-slate-900 rounded-xl p-8 mb-10 shadow-xl border border-slate-800 text-center relative overflow-hidden group">
+           {/* Background Decoration */}
+           <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
+              <BarChart3 className="w-full h-full text-accent-teal transform scale-150 translate-y-10" />
+           </div>
+           
+           <div className="relative z-10 flex flex-col items-center">
+             <div className="p-3 bg-slate-800 rounded-full mb-4 border border-slate-700 text-accent-teal">
+               <TrendingUp size={32} />
+             </div>
+             
+             {/* If stats are loading or 0, we can fallback or show the live number */}
+             <motion.span 
+               initial={{ opacity: 0, scale: 0.8 }}
+               animate={{ opacity: 1, scale: 1 }}
+               transition={{ duration: 0.5 }}
+               className="text-4xl md:text-6xl font-bold text-white tracking-tight mb-2"
+             >
+               {totalLifetimeViews > 0 ? totalLifetimeViews.toLocaleString() : "Loading..."}
+             </motion.span>
+             
+             <span className="text-lg md:text-xl text-slate-400 font-medium">
+               Lifetime Views <span className="text-slate-600 text-sm">(Created Articles)</span>
+             </span>
+           </div>
+        </div>
+
         {/* Stats Grid */}
         {stats && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-            <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex flex-col items-center text-center">
+            <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex flex-col items-center text-center hover:border-accent-teal/50 transition-colors">
               <div className="p-2 bg-blue-50 text-oxford rounded-full mb-2">
                 <Edit3 size={20} />
               </div>
@@ -200,7 +239,7 @@ const WikipediaEdits: React.FC = () => {
               <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Total Edits</span>
             </div>
 
-            <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex flex-col items-center text-center">
+            <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex flex-col items-center text-center hover:border-accent-teal/50 transition-colors">
               <div className="p-2 bg-green-50 text-green-700 rounded-full mb-2">
                 <FileText size={20} />
               </div>
@@ -210,7 +249,7 @@ const WikipediaEdits: React.FC = () => {
               <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Articles Created</span>
             </div>
 
-            <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex flex-col items-center text-center">
+            <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex flex-col items-center text-center hover:border-accent-teal/50 transition-colors">
               <div className="p-2 bg-amber-50 text-amber-700 rounded-full mb-2">
                 <Calendar size={20} />
               </div>
@@ -218,7 +257,7 @@ const WikipediaEdits: React.FC = () => {
               <span className="text-xs text-slate-500 uppercase tracking-wider font-semibold">Active Since {new Date(stats.registrationDate).getFullYear()}</span>
             </div>
 
-            <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex flex-col items-center text-center">
+            <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm flex flex-col items-center text-center hover:border-accent-teal/50 transition-colors">
               <div className="p-2 bg-purple-50 text-purple-700 rounded-full mb-2">
                 <Award size={20} />
               </div>
@@ -320,7 +359,7 @@ const WikipediaEdits: React.FC = () => {
                       </div>
                     )}
                     {/* Lifetime Views Badge */}
-                    <div className="absolute top-4 left-4 bg-white/95 backdrop-blur px-3 py-1.5 rounded-lg shadow-sm flex items-center gap-2 text-slate-900">
+                    <div className="absolute top-4 left-4 bg-white/95 backdrop-blur px-3 py-1.5 rounded-lg shadow-sm flex items-center gap-2 text-slate-900 z-10">
                       <Eye size={16} className="text-accent-teal" />
                       <div className="flex flex-col leading-none">
                          <span className="text-sm font-bold">{article.lifetimeViews.toLocaleString()}</span>
