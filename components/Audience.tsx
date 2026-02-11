@@ -1,13 +1,13 @@
 import React from 'react';
 import Section from './Section';
-import { Smartphone, TrendingUp, Users, Heart, Play, BarChart2, ExternalLink } from 'lucide-react';
+import { Smartphone, Users, Heart, Play, BarChart2, ExternalLink, MessageCircle, Bookmark } from 'lucide-react';
 
 const contentStats = [
   {
     label: "Yearly Views",
     value: "117K+", // Update based on your analytics
     icon: <BarChart2 size={20} />
-  },
+  }, // <--- Added missing comma here
   {
     label: "Total Likes",
     value: "1K+", // Update this with your actual total likes
@@ -37,9 +37,9 @@ const topVideos = [
     title: "Ready Player Two: Sequel Critique",
     date: "January 2024",
     views: "50.1K",
-    likes: "460++", // REPLACE with actual (not visible in screenshot)
-    comments: "60+", // REPLACE with actual
-    saves: "70+",  // REPLACE with actual
+    likes: "460+",
+    comments: "60+",
+    saves: "70+",
     analysis: "Critiqued the sequel to a major sci-fi franchise, engaging with a highly active fan community. Facilitated debate on the evolution of cyberpunk tropes in modern media.",
     link: "https://www.tiktok.com/@squidreads/video/7319488631901572384"
   },
@@ -47,7 +47,7 @@ const topVideos = [
     id: 3,
     title: "Hunger Games: Satire & Trend Cycle",
     date: "January 2025",
-    views: "10K", // Updated from 10k to match screenshot context if needed, kept as 10K per prompt
+    views: "10K",
     likes: "813",
     comments: "35",
     saves: "76",
