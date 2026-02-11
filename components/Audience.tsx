@@ -15,7 +15,7 @@ const contentStats = [
   },
   {
     label: "Yearly Views",
-    value: "117k", // Update based on your analytics
+    value: "117K+", // Update based on your analytics
     icon: <BarChart2 size={20} />
   }
 ];
