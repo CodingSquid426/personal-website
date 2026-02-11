@@ -18,8 +18,6 @@ const contentStats = [
     value: "100+", // Update this with your actual follower count
     icon: <Users size={20} />
   },
-
-
 ];
 
 const topVideos = [
