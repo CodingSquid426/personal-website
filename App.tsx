@@ -3,11 +3,11 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Resume from './components/Resume';
 import GithubRepos from './components/GithubRepos';
-import KnowledgeCommons from './components/KnowledgeCommons';
-import Journalism from './components/Journalism';
-import Audience from './components/Audience';
-import Press from './components/Press'; // <--- Restored Import
+import Scholar from './components/Scholar'; // Restored for "Academia"
+import Press from './components/Press';
 import WikipediaEdits from './components/WikipediaEdits';
+import Audience from './components/Audience';
+import Journalism from './components/Journalism';
 import Footer from './components/Footer';
 
 const App: React.FC = () => {
@@ -16,13 +16,13 @@ const App: React.FC = () => {
       <Navbar />
       <main>
         <Hero />
-        <Resume /> 
-        <GithubRepos />
-        <KnowledgeCommons />
-        <Journalism />
-        <Audience />
-        <Press /> {/* <--- Restored Component */}
-        <WikipediaEdits />
+        <Resume />          {/* Experience */}
+        <GithubRepos />     {/* Coding */}
+        <Scholar />         {/* Academia */}
+        <Press />           {/* Mentioned in News */}
+        <WikipediaEdits />  {/* Digital Volunteering */}
+        <Audience />        {/* Digital Engagement */}
+        <Journalism />      {/* Journalism */}
       </main>
       <Footer />
     </div>
