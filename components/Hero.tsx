@@ -48,7 +48,7 @@ const Hero: React.FC = () => {
             <img 
               src="https://github.com/CodingSquid426.png" 
               alt="Edward Mason Portrait" 
-              className="w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-700"
+              className="w-full h-auto object-cover colour hover:grayscale-0 transition-all duration-700"
             />
           </div>
           {/* Decorative background element */}
