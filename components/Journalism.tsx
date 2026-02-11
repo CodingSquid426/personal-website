@@ -1,63 +1,110 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Section from './Section';
-import { PenTool, ExternalLink } from 'lucide-react';
+import { ExternalLink, Calendar, Globe } from 'lucide-react';
+
+interface Article {
+  url: string;
+  title: string;
+  image: string | null;
+  description: string;
+  siteName: string;
+  date: string;
+}
+
+const articleUrls = [
+  "https://www.london-now.co.uk/young-reporter/19902/",
+  "https://www.london-now.co.uk/young-reporter/21124/",
+  "https://www.london-now.co.uk/young-reporter/19337/",
+  "https://www.london-now.co.uk/young-reporter/19263/",
+  "https://www.london-now.co.uk/young-reporter/18897/",
+  "https://www.london-now.co.uk/young-reporter/21122/"
+];
 
 const Journalism: React.FC = () => {
+  const [articles, setArticles] = useState<Article[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      const promises = articleUrls.map(async (url) => {
+        try {
+          const res = await fetch(`/api/metadata?url=${encodeURIComponent(url)}`);
+          if (!res.ok) throw new Error('Failed');
+          return await res.json();
+        } catch (error) {
+          console.error(`Error fetching ${url}`, error);
+          return null;
+        }
+      });
+
+      const results = await Promise.all(promises);
+      setArticles(results.filter((a) => a !== null)); // Filter out failed fetches
+      setLoading(false);
+    };
+
+    fetchArticles();
+  }, []);
+
   return (
-    <Section id="journalism" title="Journalism & Public Writing" subtitle="Synthesizing complexity for broad audiences." className="bg-slate-50">
-      <div className="space-y-12">
-        
-        {/* Newsquest */}
-        <div className="flex flex-col md:flex-row gap-8 items-start border-b border-slate-200 pb-12">
-          <div className="md:w-1/3">
-            <h3 className="text-xl font-bold font-serif text-slate-900 mb-2">Newsquest Media</h3>
-            <p className="text-sm text-slate-500 mb-4">Audience: 2 Million | SEO Optimized</p>
-            <div className="h-1 w-12 bg-oxford rounded-full"></div>
-          </div>
-          <div className="md:w-2/3">
-             <p className="text-slate-600 mb-4">
-               Published 8 articles covering local governance, technology impacts, and community initiatives. Focused on clear communication and search engine optimization to maximize reach and engagement across regional titles.
-             </p>
-             <a href="#" className="text-accent-teal hover:text-teal-700 font-medium inline-flex items-center gap-1">
-               Read Archive <ExternalLink size={14} />
-             </a>
-          </div>
-        </div>
+    <Section 
+      id="journalism" 
+      title="Journalism" 
+      subtitle="Synthesizing complexity for broad audiences." 
+      className="bg-slate-50"
+    >
+      {loading ? (
+        <div className="text-center py-12 text-slate-500">Loading articles...</div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {articles.map((article, idx) => (
+            <a 
+              key={idx} 
+              href={article.url} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg transition-all flex flex-col h-full"
+            >
+              {/* Image Header */}
+              <div className="h-48 bg-slate-200 overflow-hidden relative">
+                {article.image ? (
+                  <img 
+                    src={article.image} 
+                    alt={article.title} 
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-slate-100 text-slate-400">
+                    <Globe size={40} />
+                  </div>
+                )}
+                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur px-2 py-1 rounded text-xs font-bold text-oxford shadow-sm">
+                  {article.siteName}
+                </div>
+              </div>
 
-        {/* Aligned AI Blog */}
-        <div className="flex flex-col md:flex-row gap-8 items-start border-b border-slate-200 pb-12">
-          <div className="md:w-1/3">
-            <h3 className="text-xl font-bold font-serif text-slate-900 mb-2">Aligned AI Blog</h3>
-            <p className="text-sm text-slate-500 mb-4">Technical Synthesis</p>
-            <div className="h-1 w-12 bg-accent-teal rounded-full"></div>
-          </div>
-          <div className="md:w-2/3">
-             <p className="text-slate-600 mb-4">
-               Authored technical deep-dives on "Best-of-N Jailbreaking" and "Concept Extrapolation". 
-               Translated complex safety engineering concepts into accessible insights for non-technical stakeholders, investors, and policymakers.
-             </p>
-             <a href="#" className="text-accent-teal hover:text-teal-700 font-medium inline-flex items-center gap-1">
-               Visit Blog <ExternalLink size={14} />
-             </a>
-          </div>
-        </div>
+              {/* Content */}
+              <div className="p-6 flex flex-col flex-grow">
+                <div className="flex items-center gap-2 text-xs text-slate-500 font-medium mb-3 uppercase tracking-wider">
+                  <Calendar size={12} />
+                  {article.date}
+                </div>
 
-        {/* Open Knowledge / Wikipedia */}
-        <div className="flex flex-col md:flex-row gap-8 items-start">
-          <div className="md:w-1/3">
-            <h3 className="text-xl font-bold font-serif text-slate-900 mb-2">Open Knowledge</h3>
-            <p className="text-sm text-slate-500 mb-4">Wikipedia & Polypedia</p>
-            <div className="h-1 w-12 bg-amber-600 rounded-full"></div>
-          </div>
-          <div className="md:w-2/3">
-             <p className="text-slate-600 mb-4">
-               Dedicated to democratizing information. Leveraged the <span className="font-semibold">Polypedia</span> project to generate stub articles for under-represented languages. 
-               Active Wikipedia editor contributing to pages on literary criticism and AI ethics.
-             </p>
-          </div>
-        </div>
+                <h3 className="text-lg font-serif font-bold text-slate-900 mb-3 group-hover:text-accent-teal transition-colors line-clamp-3">
+                  {article.title}
+                </h3>
 
-      </div>
+                <p className="text-slate-600 text-sm mb-4 line-clamp-3 flex-grow">
+                  {article.description}
+                </p>
+
+                <div className="flex items-center gap-1 text-sm font-semibold text-accent-teal mt-auto">
+                  Read Article <ExternalLink size={14} />
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
+      )}
     </Section>
   );
 };
