@@ -4,7 +4,8 @@ export default async function handler(req, res) {
   const AUTHOR_NAME = "Mason, Edward";
   const query = `metadata.creators.person_or_org.name:"${AUTHOR_NAME}"`;
   
-  const url = `https://works.hcommons.org/api/records?q=${encodeURIComponent(query)}&sort=newest&size=5`;
+  // CHANGED: Increased size to 100 to fetch all papers instead of just 5
+  const url = `https://works.hcommons.org/api/records?q=${encodeURIComponent(query)}&sort=newest&size=100`;
 
   try {
     // 2. Fetch data from Knowledge Commons (Server-to-Server)

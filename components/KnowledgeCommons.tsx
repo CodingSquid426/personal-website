@@ -39,6 +39,14 @@ const KnowledgeCommons: React.FC = () => {
           url: hit.links.self_html,
           resourceType: hit.metadata.resource_type?.title?.en || "Publication"
         }));
+
+        // CHANGED: Sort by stated Publication Date (Newest -> Oldest)
+        fetchedPapers.sort((a: Paper, b: Paper) => {
+          const dateA = new Date(a.publicationDate).getTime();
+          const dateB = new Date(b.publicationDate).getTime();
+          return dateB - dateA; // Descending order
+        });
+
         setPapers(fetchedPapers);
         setLoading(false);
       })
