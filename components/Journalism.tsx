@@ -14,7 +14,7 @@ const articles = [
   {
     id: '21124', 
     title: "Why Are Emily Dickinson's Poems Still Studied in the Modern Era?",
-    date: "April 30th 2022",
+    date: "April 30th, 2022",
     description: "Reporting on local events and community initiatives as part of the Young Reporter scheme.",
     url: "https://www.london-now.co.uk/young-reporter/21124/",
     image: "https://www.london-now.co.uk/resources/images/13732256.jpg?type=mds-article-962"
@@ -22,7 +22,7 @@ const articles = [
   {
     id: '19902',
     title: "Wife of Willesden Review: A Delightful Reimagining of a Classic Chaucer Tale",
-    date: "Dec 28th, 2021",
+    date: "December 28th, 2021",
     description: "Reviewing Zadie Smith’s adaptation of The Wife of Bath, exploring how it bridges contemporary slang with Shakespearean roots.",
     url: "https://www.london-now.co.uk/young-reporter/19902/",
     image: "https://www.london-now.co.uk/resources/images/13334066.jpg?type=mds-article-962"
@@ -30,7 +30,7 @@ const articles = [
   {
     id: '19263',
     title: "Eternals Represents the Next Step Forward for Disney's Diversity",
-    date: "Nov 5th, 2021",
+    date: "November 5th, 2021",
     description: "Examining Marvel's Eternals as a pivotal moment for representation in mainstream superhero media.",
     url: "https://www.london-now.co.uk/young-reporter/19263/",
     image: "https://www.london-now.co.uk/resources/images/13246606.jpg?type=mds-article-962"
@@ -38,7 +38,7 @@ const articles = [
   {
     id: '19337',
     title: "Lion Learning At Hampton School Sparks Passion in Local Primary Students",
-    date: "Nov 29th 2021",
+    date: "November 29th, 2021",
     description: "Coverage of local news and student perspectives for the London Now publication.",
     url: "https://www.london-now.co.uk/young-reporter/19337/",
     image: "https://www.london-now.co.uk/resources/images/13250205.jpg?type=mds-article-962"
@@ -46,7 +46,7 @@ const articles = [
   {
     id: '18897',
     title: "Pledges For The Planet: School Eco-Club Begins Bold Plan of Climate Action",
-    date: "Oct 21st 2021",
+    date: "October 21st, 2021",
     description: "Highlighting student-led environmental initiatives and the impact of local eco-clubs on community awareness.",
     url: "https://www.london-now.co.uk/young-reporter/18897/",
     image: "https://www.london-now.co.uk/resources/images/13127187.jpg?type=mds-article-962"
