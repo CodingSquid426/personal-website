@@ -7,8 +7,8 @@ import KnowledgeCommons from './components/KnowledgeCommons';
 import Scholar from './components/Scholar';
 import Journalism from './components/Journalism';
 import Leadership from './components/Leadership';
-import WikipediaEdits from './components/WikipediaEdits'; // <--- Import
-import Press from './components/Press'; // <--- Import
+import Press from './components/Press'; // <--- Ensure this is imported
+import WikipediaEdits from './components/WikipediaEdits';
 import Runner from './components/Runner';
 import Resume from './components/Resume';
 import Footer from './components/Footer';
@@ -25,7 +25,7 @@ const App: React.FC = () => {
         <Scholar />
         <Journalism />
         <Leadership />
-        <Journalism />
+        <Press /> {/* <--- Added missing section here */}
         <WikipediaEdits />
         <Runner />
         <Resume />
