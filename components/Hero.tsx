@@ -46,7 +46,7 @@ const Hero: React.FC = () => {
         >
           <div className="relative z-10 rounded-lg overflow-hidden shadow-2xl border-4 border-white">
             <img 
-              src="src="https://github.com/codingsquid426.png" 
+              src="src="https://github.com/CodingSquid426.png" 
               alt="Edward Mason Portrait" 
               className="w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-700"
             />
