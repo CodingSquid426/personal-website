@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Edit3, GitCommit, ArrowRight, Clock, Award, FileText, Calendar, ChevronDown, ChevronRight, Eye, Star, TrendingUp, BarChart3 } from 'lucide-react';
+import { Edit3, GitCommit, ArrowRight, Clock, Award, FileText, Calendar, ChevronDown, ChevronRight, Eye, Star, TrendingUp, BarChart3, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface WikiEdit {
@@ -72,7 +72,6 @@ const WikipediaEdits: React.FC = () => {
         const userData = await userRes.json();
 
         // --- 2. Created Articles (for Count & Lifetime Views) ---
-        // Fetch ALL created articles (Mainspace only: ucnamespace=0)
         const createdRes = await fetch(
           `https://en.wikipedia.org/w/api.php?action=query&list=usercontribs&ucuser=${username}&ucshow=new&ucnamespace=0&uclimit=500&format=json&origin=*`
         );
@@ -80,7 +79,6 @@ const WikipediaEdits: React.FC = () => {
         const createdArticles = createdData.query?.usercontribs || [];
 
         // --- 3. Calculate Lifetime Views (Impact) ---
-        // We fetch pageviews for every article the user CREATED.
         const todayStr = new Date().toISOString().slice(0,10).replace(/-/g,'');
         
         const viewPromises = createdArticles.map(async (article: any) => {
@@ -143,7 +141,6 @@ const WikipediaEdits: React.FC = () => {
         // --- 6. Fetch Featured Articles Details ---
         const featuredData = await Promise.all(featuredTitles.map(async (title) => {
           try {
-            // Metadata
             const metaUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=extracts|pageimages|info|revisions&titles=${encodeURIComponent(title)}&pithumbsize=600&exintro&explaintext&inprop=url&rvlimit=1&rvdir=newer&rvprop=timestamp`;
             const metaRes = await fetch(metaUrl);
             const metaJson = await metaRes.json();
@@ -152,7 +149,6 @@ const WikipediaEdits: React.FC = () => {
             const page = metaJson.query.pages[pageId];
             if (page.missing) return null;
 
-            // Lifetime Views (Specific for these 3)
             const viewsUrl = `https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/${encodeURIComponent(title)}/monthly/2015070100/${todayStr}00`;
             const viewsRes = await fetch(viewsUrl);
             const viewsJson = await viewsRes.json();
@@ -195,14 +191,18 @@ const WikipediaEdits: React.FC = () => {
   return (
     <div className="py-12 bg-slate-50 border-t border-slate-200">
       <div className="max-w-5xl mx-auto px-6 md:px-12">
-        <h3 className="text-xl font-serif font-bold text-slate-900 mb-8 flex items-center gap-2">
-          <Edit3 size={24} className="text-accent-teal" />
-          Wikipedia Contributions
-        </h3>
+        <div className="mb-8">
+          <h3 className="text-xl font-serif font-bold text-slate-900 flex items-center gap-2 mb-2">
+            <Globe size={24} className="text-accent-teal" />
+            Digital Volunteering
+          </h3>
+          <p className="text-slate-600 max-w-2xl text-sm leading-relaxed">
+            Democratizing access to information through strategic contributions to the world's largest open-source encyclopedia.
+          </p>
+        </div>
 
         {/* Prominent Lifetime Views Box */}
         <div className="bg-slate-900 rounded-xl p-8 mb-10 shadow-xl border border-slate-800 text-center relative overflow-hidden group">
-           {/* Background Decoration */}
            <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
               <BarChart3 className="w-full h-full text-accent-teal transform scale-150 translate-y-10" />
            </div>
@@ -212,7 +212,6 @@ const WikipediaEdits: React.FC = () => {
                <TrendingUp size={32} />
              </div>
              
-             {/* If stats are loading or 0, we can fallback or show the live number */}
              <motion.span 
                initial={{ opacity: 0, scale: 0.8 }}
                animate={{ opacity: 1, scale: 1 }}
@@ -345,16 +344,16 @@ const WikipediaEdits: React.FC = () => {
             <div className="grid grid-cols-1 gap-8">
               {featuredArticles.map((article) => (
                 <div key={article.title} className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-md transition-shadow flex flex-col md:flex-row">
-                  {/* Image */}
-                  <div className="md:w-1/3 h-48 md:h-auto bg-slate-100 relative">
+                  {/* Image - Changed to object-contain and added background to look good */}
+                  <div className="md:w-1/3 h-48 md:h-auto bg-slate-100 relative p-4 flex items-center justify-center">
                     {article.imageUrl ? (
                       <img 
                         src={article.imageUrl} 
                         alt={article.title} 
-                        className="w-full h-full object-cover absolute inset-0"
+                        className="w-full h-full object-contain"
                       />
                     ) : (
-                      <div className="w-full h-full flex items-center justify-center text-slate-300">
+                      <div className="text-slate-300">
                         <FileText size={48} />
                       </div>
                     )}

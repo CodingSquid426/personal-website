@@ -71,12 +71,12 @@ const Journalism: React.FC = () => {
             className="group bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg transition-all flex flex-col h-full"
           >
             {/* Image Header */}
-            <div className="h-48 bg-slate-200 overflow-hidden relative flex items-center justify-center">
+            <div className="h-48 bg-slate-200 overflow-hidden relative flex items-center justify-center p-2">
               {article.image ? (
                 <img 
                   src={article.image} 
                   alt={article.title} 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-500"
                 />
               ) : (
                 <div className="text-slate-400 flex flex-col items-center gap-2">
