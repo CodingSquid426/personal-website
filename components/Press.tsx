@@ -1,6 +1,6 @@
 import React from 'react';
 import Section from './Section';
-import { Newspaper, ExternalLink, Calendar, Award, Megaphone } from 'lucide-react';
+import { Newspaper, ExternalLink, Calendar, Award, Megaphone, Radio, PlayCircle } from 'lucide-react';
 
 const pressItems = [
   {
@@ -58,43 +58,102 @@ const Press: React.FC = () => {
       subtitle="Media coverage, awards, and external features." 
       className="bg-white"
     >
-      <div className="space-y-4">
-        {pressItems.map((item) => (
-          <a 
-            key={item.id}
-            href={item.url}
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="group block bg-slate-50 hover:bg-white border border-slate-200 rounded-lg p-5 hover:shadow-md transition-all"
-          >
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-              <div className="flex items-start gap-4">
-                <div className="p-3 bg-white rounded-full border border-slate-200 text-accent-teal group-hover:scale-110 transition-transform">
-                  <item.icon size={20} />
-                </div>
-                <div>
-                  <h3 className="font-serif font-bold text-lg text-slate-900 group-hover:text-accent-teal transition-colors">
-                    {item.title}
-                  </h3>
-                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500 font-bold uppercase tracking-wider mt-1 mb-2">
-                    <span>{item.source}</span>
-                    <span className="w-1 h-1 rounded-full bg-slate-300"></span>
-                    <span className="flex items-center gap-1">
-                      <Calendar size={10} /> {item.date}
-                    </span>
-                  </div>
-                  <p className="text-slate-600 text-sm max-w-2xl">
-                    {item.description}
-                  </p>
-                </div>
-              </div>
-              
-              <div className="flex-shrink-0 self-start sm:self-center">
-                <ExternalLink size={18} className="text-slate-400 group-hover:text-accent-teal" />
+      <div className="space-y-8">
+        
+        {/* Featured Broadcast Box */}
+        <div className="relative bg-slate-900 rounded-xl overflow-hidden shadow-2xl group border border-slate-700">
+          {/* Background Gradient/Image Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-slate-900 via-slate-900 to-slate-800 opacity-90 z-10"></div>
+          <div className="absolute right-0 top-0 h-full w-1/2 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-accent-teal/20 via-transparent to-transparent z-10"></div>
+          
+          <div className="relative z-20 p-8 md:p-10 flex flex-col md:flex-row gap-8 items-start">
+            
+            {/* Icon Column */}
+            <div className="flex-shrink-0">
+              <div className="p-4 bg-orange-600 rounded-lg text-white shadow-lg shadow-orange-900/20">
+                <Radio size={32} />
               </div>
             </div>
-          </a>
-        ))}
+
+            {/* Content Column */}
+            <div className="flex-grow space-y-4">
+              <div className="flex items-center gap-3 mb-1">
+                <span className="bg-red-600 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider animate-pulse">
+                  Live Broadcast
+                </span>
+                <span className="text-slate-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1">
+                  <Calendar size={12} /> October 5, 2024 • 10:04 AM
+                </span>
+              </div>
+
+              <div>
+                <h3 className="text-2xl md:text-3xl font-serif font-bold text-white mb-2 leading-tight">
+                  BBC News Radio: Featured Guest - Parkrun 20th Anniversary Coverage
+                </h3>
+                <h4 className="text-accent-teal font-medium text-lg">
+                  Live Interview from Bushy Park
+                </h4>
+              </div>
+
+              <p className="text-slate-300 text-base leading-relaxed max-w-2xl">
+                Interviewed live on national television at the birthplace of Parkrun. Provided commentary on the event's evolution from 13 runners to a global phenomenon, drawing on deep personal experience as a frequent Parkrun and volunteer to explain the logistics and community impact of the 20-year milestone.
+              </p>
+
+              <div className="pt-2">
+                <a 
+                  href="https://www.bbc.co.uk/programmes/m0023tpt" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-white text-slate-900 hover:bg-slate-100 px-5 py-3 rounded-lg font-bold transition-all shadow hover:shadow-lg group-hover:scale-105 transform duration-300"
+                >
+                  <PlayCircle size={20} className="text-orange-600" />
+                  See Archived Broadcast Info
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Standard Press List */}
+        <div className="space-y-4">
+          <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider ml-1">Archive & Print</h4>
+          {pressItems.map((item) => (
+            <a 
+              key={item.id}
+              href={item.url}
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="group block bg-slate-50 hover:bg-white border border-slate-200 rounded-lg p-5 hover:shadow-md transition-all"
+            >
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="flex items-start gap-4">
+                  <div className="p-3 bg-white rounded-full border border-slate-200 text-accent-teal group-hover:scale-110 transition-transform">
+                    <item.icon size={20} />
+                  </div>
+                  <div>
+                    <h3 className="font-serif font-bold text-lg text-slate-900 group-hover:text-accent-teal transition-colors">
+                      {item.title}
+                    </h3>
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500 font-bold uppercase tracking-wider mt-1 mb-2">
+                      <span>{item.source}</span>
+                      <span className="w-1 h-1 rounded-full bg-slate-300"></span>
+                      <span className="flex items-center gap-1">
+                        <Calendar size={10} /> {item.date}
+                      </span>
+                    </div>
+                    <p className="text-slate-600 text-sm max-w-2xl">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="flex-shrink-0 self-start sm:self-center">
+                  <ExternalLink size={18} className="text-slate-400 group-hover:text-accent-teal" />
+                </div>
+              </div>
+            </a>
+          ))}
+        </div>
       </div>
     </Section>
   );
