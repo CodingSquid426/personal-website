@@ -3,10 +3,11 @@ import { Menu, X } from 'lucide-react';
 
 const navItems = [
   { name: 'About', href: '#hero' },
-  { name: 'Experience', href: '#cv' }, // Updated Link
+  { name: 'Experience', href: '#cv' },
   { name: 'Code', href: '#github' },
   { name: 'Journalism', href: '#journalism' },
   { name: 'Audience', href: '#audience' },
+  { name: 'Press', href: '#press' }, // <--- Restored Link
   { name: 'Wiki', href: '#wikipedia-edits' }
 ];
 
