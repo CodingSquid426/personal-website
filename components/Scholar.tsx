@@ -24,7 +24,7 @@ const Scholar: React.FC = () => {
             A comprehensive study proposing new methodologies for detecting machine-generated text by analyzing statistical anomalies in lexical choices, bridging traditional linguistics with modern NLP.
           </p>
           <div className="pl-16">
-            <a href="#" className="text-oxford font-semibold hover:underline">Read on Academia.edu &rarr;</a>
+            <a href="https://independent.academia.edu/EdwardMason18" target="_blank" rel="noopener noreferrer" className="text-oxford font-semibold hover:underline">Read on Academia.edu &rarr;</a>
           </div>
         </div>
 

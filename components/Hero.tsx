@@ -31,9 +31,9 @@ const Hero: React.FC = () => {
               <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
             </a>
             <div className="flex items-center gap-4 px-4">
-               <a href="#" className="text-slate-500 hover:text-oxford transition-colors"><Github size={24} /></a>
-               <a href="#" className="text-slate-500 hover:text-oxford transition-colors"><Linkedin size={24} /></a>
-               <a href="#" className="text-slate-500 hover:text-oxford transition-colors"><Mail size={24} /></a>
+               <a href="https://github.com/CodingSquid426" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-oxford transition-colors"><Github size={24} /></a>
+               <a href="https://www.linkedin.com/in/edward-mason-a4b97b327" target="_blank" rel="noopener noreferrer" className="text-slate-500 hover:text-oxford transition-colors"><Linkedin size={24} /></a>
+               <a href="mailto:edwardalexandermason@gmail.com" className="text-slate-500 hover:text-oxford transition-colors"><Mail size={24} /></a>
             </div>
           </div>
         </motion.div>
@@ -46,7 +46,7 @@ const Hero: React.FC = () => {
         >
           <div className="relative z-10 rounded-lg overflow-hidden shadow-2xl border-4 border-white">
             <img 
-              src="src="https://github.com/CodingSquid426.png" 
+              src="https://github.com/CodingSquid426.png" 
               alt="Edward Mason Portrait" 
               className="w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-700"
             />
