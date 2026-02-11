@@ -11,7 +11,7 @@ interface Repo {
   forks_count: number;
   language: string;
   updated_at: string;
-  created_at: string; // Added created_at to interface if needed for display, though logic uses API sort
+  created_at: string; 
 }
 
 const GithubRepos: React.FC = () => {
@@ -20,7 +20,7 @@ const GithubRepos: React.FC = () => {
   const username = 'codingsquid426'; // CHANGE THIS IF NEEDED
 
   useEffect(() => {
-    // CHANGED: sort=updated -> sort=created to order by creation date
+    // Sort by creation date
     fetch(`https://api.github.com/users/${username}/repos?sort=created&direction=desc&per_page=6`)
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch');
@@ -36,7 +36,7 @@ const GithubRepos: React.FC = () => {
       });
   }, []);
 
-  if (loading) return null; // Or a loading spinner if you prefer
+  if (loading) return null; 
 
   return (
     <Section 
@@ -80,8 +80,8 @@ const GithubRepos: React.FC = () => {
               </div>
               <div className="flex items-center gap-1 opacity-70">
                 <Calendar size={12} />
-                {/* You might want to display created_at here now, or keep updated_at to show activity */}
-                {new Date(repo.updated_at).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
+                {/* Now displaying created_at to match the sort order */}
+                {new Date(repo.created_at).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })}
               </div>
             </div>
           </a>
