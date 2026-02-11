@@ -4,20 +4,22 @@ import { Smartphone, TrendingUp, Users, Heart, Play, BarChart2, ExternalLink } f
 
 const contentStats = [
   {
-    label: "Followers",
-    value: "100+", // Update this with your actual follower count
-    icon: <Users size={20} />
-  },
+    label: "Yearly Views",
+    value: "117K+", // Update based on your analytics
+    icon: <BarChart2 size={20} />
+  }
   {
     label: "Total Likes",
     value: "1K+", // Update this with your actual total likes
     icon: <Heart size={20} />
   },
   {
-    label: "Yearly Views",
-    value: "117K+", // Update based on your analytics
-    icon: <BarChart2 size={20} />
-  }
+    label: "Followers",
+    value: "100+", // Update this with your actual follower count
+    icon: <Users size={20} />
+  },
+
+
 ];
 
 const topVideos = [
