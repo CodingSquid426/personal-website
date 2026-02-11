@@ -9,6 +9,7 @@ const navItems = [
   { name: 'Journalism', href: '#journalism' },
   { name: 'Leadership', href: '#leadership' },
   { name: 'Runner', href: '#runner' },
+  { name: 'Audience', href: '#audience' },
   { name: 'CV', href: '#cv' },
   { name: 'Press', href: '#press' }
 ];
