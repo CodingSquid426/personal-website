@@ -116,7 +116,6 @@ const Press: React.FC = () => {
 
         {/* Standard Press List */}
         <div className="space-y-4">
-          <h4 className="text-sm font-bold text-slate-400 uppercase tracking-wider ml-1">Archive & Print</h4>
           {pressItems.map((item) => (
             <a 
               key={item.id}
