@@ -4,12 +4,11 @@ import { Menu, X } from 'lucide-react';
 const navItems = [
   { name: 'About', href: '#hero' },
   { name: 'Experience', href: '#cv' },
-  { name: 'Coding', href: '#github' },
-  { name: 'Academia', href: '#scholar' },
-  { name: 'News', href: '#press' },
-  { name: 'Volunteering', href: '#wikipedia-edits' },
-  { name: 'Engagement', href: '#audience' },
-  { name: 'Journalism', href: '#journalism' }
+  { name: 'Code', href: '#github' },
+  { name: 'Journalism', href: '#journalism' },
+  { name: 'Audience', href: '#audience' },
+  { name: 'Press', href: '#press' }, // <--- Restored Link
+  { name: 'Wiki', href: '#wikipedia-edits' }
 ];
 
 const Navbar: React.FC = () => {
@@ -32,7 +31,7 @@ const Navbar: React.FC = () => {
         </a>
 
         {/* Desktop Nav */}
-        <div className="hidden lg:flex space-x-6">
+        <div className="hidden md:flex space-x-8">
           {navItems.map((item) => (
             <a
               key={item.name}
@@ -45,7 +44,7 @@ const Navbar: React.FC = () => {
         </div>
 
         {/* Mobile Toggle */}
-        <div className="lg:hidden">
+        <div className="md:hidden">
           <button onClick={() => setIsOpen(!isOpen)} className="text-slate-700">
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -54,7 +53,7 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="lg:hidden absolute top-full left-0 w-full bg-white shadow-lg border-t border-slate-100 py-4 flex flex-col items-center space-y-4">
+        <div className="md:hidden absolute top-full left-0 w-full bg-white shadow-lg border-t border-slate-100 py-4 flex flex-col items-center space-y-4">
           {navItems.map((item) => (
             <a
               key={item.name}
