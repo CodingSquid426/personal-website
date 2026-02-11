@@ -2,19 +2,18 @@
 <img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
 </div>
 
-# Run and deploy your AI Studio app
+Project Name: personal-website Tech Stack: React, TypeScript, Vite, Tailwind CSS, Framer Motion, Vercel Serverless Functions.
 
-This contains everything you need to run your app locally.
+About: This project is a comprehensive personal portfolio designed to bridge the gap between "English Literature & Computational Science". It serves as a dynamic resume and showcase for an individual with a dual background in humanities and high-performance computing.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1rGUuAFezBCTx9t3a_Z5amSyrMjADlHe1
+Architecture: The application is built as a Single Page Application (SPA) using React and Vite, styled with Tailwind CSS for a clean, academic aesthetic featuring "Oxford Blue" and Slate tones.
 
-## Run Locally
+Dynamic Integrations: unlike static portfolios, this site actively fetches live data:
 
-**Prerequisites:**  Node.js
+GitHub Repos: Fetches the latest public repositories and contribution stats via the GitHub API.
 
+Wikipedia Contributions: Retrieves recent edit history directly from the Wikipedia API to showcase volunteer activity.
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Academic Publications: Uses a custom serverless API route (/api/papers) to fetch and display research papers from the Knowledge Commons repository.
+
+Content Sections: The site is modularized into sections including "The Builder" (coding projects), "The Scholar" (research & policy), "Journalism" (articles), and "Leadership" (UN IGF & Orchestra roles).
