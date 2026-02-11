@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Builder from './components/Builder';
 import GithubRepos from './components/GithubRepos';
+import KnowledgeCommons from './components/KnowledgeCommons';
 import Scholar from './components/Scholar';
 import Journalism from './components/Journalism';
 import Leadership from './components/Leadership';
@@ -18,6 +19,7 @@ const App: React.FC = () => {
         <Hero />
         <Builder />
         <GithubRepos />
+        <KnowledgeCommons />
         <Scholar />
         <Journalism />
         <Leadership />
