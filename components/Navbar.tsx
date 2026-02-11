@@ -3,15 +3,11 @@ import { Menu, X } from 'lucide-react';
 
 const navItems = [
   { name: 'About', href: '#hero' },
-  { name: 'Builder', href: '#builder' },
+  { name: 'Experience', href: '#cv' }, // Updated Link
   { name: 'Code', href: '#github' },
-  { name: 'Scholar', href: '#scholar' },
   { name: 'Journalism', href: '#journalism' },
-  { name: 'Leadership', href: '#leadership' },
-  { name: 'Runner', href: '#runner' },
   { name: 'Audience', href: '#audience' },
-  { name: 'CV', href: '#cv' },
-  { name: 'Press', href: '#press' }
+  { name: 'Wiki', href: '#wikipedia-edits' }
 ];
 
 const Navbar: React.FC = () => {
