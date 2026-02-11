@@ -6,7 +6,7 @@ import GithubRepos from './components/GithubRepos';
 import KnowledgeCommons from './components/KnowledgeCommons';
 import Journalism from './components/Journalism';
 import Audience from './components/Audience';
-import Press from './components/Press'; // <--- Restored Import
+import Press from './components/Press';
 import WikipediaEdits from './components/WikipediaEdits';
 import Footer from './components/Footer';
 
@@ -19,10 +19,10 @@ const App: React.FC = () => {
         <Resume /> 
         <GithubRepos />
         <KnowledgeCommons />
+        <Press />
+        <WikipediaEdits />
         <Journalism />
         <Audience />
-        <Press /> {/* <--- Restored Component */}
-        <WikipediaEdits />
       </main>
       <Footer />
     </div>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Section from './Section';
 import { Edit3, GitCommit, ArrowRight, Clock, Award, FileText, Calendar, ChevronDown, ChevronRight, Eye, Star, TrendingUp, BarChart3, Globe } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -72,7 +73,6 @@ const WikipediaEdits: React.FC = () => {
         const userData = await userRes.json();
 
         // --- 2. Created Articles (for Count & Lifetime Views) ---
-        // Fetch ALL created articles (Mainspace only: ucnamespace=0)
         const createdRes = await fetch(
           `https://en.wikipedia.org/w/api.php?action=query&list=usercontribs&ucuser=${username}&ucshow=new&ucnamespace=0&uclimit=500&format=json&origin=*`
         );
@@ -80,7 +80,6 @@ const WikipediaEdits: React.FC = () => {
         const createdArticles = createdData.query?.usercontribs || [];
 
         // --- 3. Calculate Lifetime Views (Impact) ---
-        // We fetch pageviews for every article the user CREATED.
         const todayStr = new Date().toISOString().slice(0,10).replace(/-/g,'');
         
         const viewPromises = createdArticles.map(async (article: any) => {
@@ -143,7 +142,7 @@ const WikipediaEdits: React.FC = () => {
         // --- 6. Fetch Featured Articles Details ---
         const featuredData = await Promise.all(featuredTitles.map(async (title) => {
           try {
-            // Metadata (Added 'images' to prop to fetch list of images on page)
+            // Fetch metadata + list of images on page
             const metaUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=extracts|pageimages|info|revisions|images&titles=${encodeURIComponent(title)}&pithumbsize=600&exintro&explaintext&inprop=url&rvlimit=1&rvdir=newer&rvprop=timestamp`;
             const metaRes = await fetch(metaUrl);
             const metaJson = await metaRes.json();
@@ -154,25 +153,36 @@ const WikipediaEdits: React.FC = () => {
 
             let imageUrl = page.thumbnail?.source;
 
-            // Fallback: If no main thumbnail, try to fetch the first image found on the page
+            // Fallback: If no main thumbnail, try to find a valid content image
             if (!imageUrl && page.images && page.images.length > 0) {
               try {
-                const firstImageTitle = page.images[0].title;
-                const imgInfoUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&iiprop=url&titles=${encodeURIComponent(firstImageTitle)}`;
-                const imgInfoRes = await fetch(imgInfoUrl);
-                const imgInfoJson = await imgInfoRes.json();
-                const imgPageId = Object.keys(imgInfoJson.query.pages)[0];
-                const imgInfo = imgInfoJson.query.pages[imgPageId];
+                // Filter out icons, logos, maintenance templates, etc.
+                const badKeywords = ['icon', 'logo', 'symbol', 'flag', 'edit', 'stub', 'ambox', 'lock', 'wikiproject'];
                 
-                if (imgInfo?.imageinfo?.[0]?.url) {
-                  imageUrl = imgInfo.imageinfo[0].url;
+                // Find the first image that doesn't contain bad keywords
+                const validImage = page.images.find((img: any) => {
+                  const lowerTitle = img.title.toLowerCase();
+                  return !badKeywords.some(keyword => lowerTitle.includes(keyword)) && 
+                         (lowerTitle.endsWith('.jpg') || lowerTitle.endsWith('.png'));
+                });
+
+                if (validImage) {
+                  const imgInfoUrl = `https://en.wikipedia.org/w/api.php?action=query&format=json&origin=*&prop=imageinfo&iiprop=url&titles=${encodeURIComponent(validImage.title)}`;
+                  const imgInfoRes = await fetch(imgInfoUrl);
+                  const imgInfoJson = await imgInfoRes.json();
+                  const imgPageId = Object.keys(imgInfoJson.query.pages)[0];
+                  const imgInfo = imgInfoJson.query.pages[imgPageId];
+                  
+                  if (imgInfo?.imageinfo?.[0]?.url) {
+                    imageUrl = imgInfo.imageinfo[0].url;
+                  }
                 }
               } catch (e) {
                 console.warn("Could not fetch fallback image for", title);
               }
             }
 
-            // Lifetime Views (Specific for these 3)
+            // Lifetime Views
             const viewsUrl = `https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/en.wikipedia/all-access/user/${encodeURIComponent(title)}/monthly/2015070100/${todayStr}00`;
             const viewsRes = await fetch(viewsUrl);
             const viewsJson = await viewsRes.json();
@@ -213,21 +223,16 @@ const WikipediaEdits: React.FC = () => {
     : 0;
 
   return (
-    <div className="py-12 bg-slate-50 border-t border-slate-200">
-      <div className="max-w-5xl mx-auto px-6 md:px-12">
-        <div className="mb-8">
-          <h3 className="text-xl font-serif font-bold text-slate-900 flex items-center gap-2 mb-2">
-            <Globe size={24} className="text-accent-teal" />
-            Digital Volunteering
-          </h3>
-          <p className="text-slate-600 max-w-2xl text-sm leading-relaxed">
-            Democratizing access to information through strategic contributions to the world's largest open-source encyclopedia.
-          </p>
-        </div>
-
+    <Section 
+      id="wikipedia-edits" 
+      title="Digital Volunteering" 
+      subtitle="Democratizing access to information through strategic contributions to the world's largest open-source encyclopedia."
+      className="bg-slate-50"
+    >
+      <div className="max-w-5xl mx-auto">
+        
         {/* Prominent Lifetime Views Box */}
         <div className="bg-slate-900 rounded-xl p-8 mb-10 shadow-xl border border-slate-800 text-center relative overflow-hidden group">
-           {/* Background Decoration */}
            <div className="absolute top-0 left-0 w-full h-full opacity-10 pointer-events-none">
               <BarChart3 className="w-full h-full text-accent-teal transform scale-150 translate-y-10" />
            </div>
@@ -237,7 +242,6 @@ const WikipediaEdits: React.FC = () => {
                <TrendingUp size={32} />
              </div>
              
-             {/* If stats are loading or 0, we can fallback or show the live number */}
              <motion.span 
                initial={{ opacity: 0, scale: 0.8 }}
                animate={{ opacity: 1, scale: 1 }}
@@ -436,7 +440,7 @@ const WikipediaEdits: React.FC = () => {
           </a>
         </div>
       </div>
-    </div>
+    </Section>
   );
 };
 
