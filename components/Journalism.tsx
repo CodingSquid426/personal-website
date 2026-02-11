@@ -9,15 +9,15 @@ const articles = [
     date: "April 30th, 2022",
     description: "An analysis of the shifting landscape of cinema and the challenges facing serious dramatic storytelling in the age of blockbusters.",
     url: "https://www.london-now.co.uk/young-reporter/21122/",
-    image: https://www.london-now.co.uk/resources/images/13732241.jpg?type=mds-article-962 // Add image URL here if you have one
+    image: "https://www.london-now.co.uk/resources/images/13732241.jpg?type=mds-article-962"
   },
   {
     id: '21124', 
-    title: "Why Are Emily Dickinson's Poems Still Studied in the Modern Era?", // <--- PLEASE UPDATE THIS TITLE
+    title: "Why Are Emily Dickinson's Poems Still Studied in the Modern Era?",
     date: "April 30th 2022",
     description: "Reporting on local events and community initiatives as part of the Young Reporter scheme.",
     url: "https://www.london-now.co.uk/young-reporter/21124/",
-    image: https://www.london-now.co.uk/resources/images/13732256.jpg?type=mds-article-962
+    image: "https://www.london-now.co.uk/resources/images/13732256.jpg?type=mds-article-962"
   },
   {
     id: '19902',
@@ -25,7 +25,7 @@ const articles = [
     date: "Dec 28th, 2021",
     description: "Reviewing Zadie Smith’s adaptation of The Wife of Bath, exploring how it bridges contemporary slang with Shakespearean roots.",
     url: "https://www.london-now.co.uk/young-reporter/19902/",
-    image: https://www.london-now.co.uk/resources/images/13334066.jpg?type=mds-article-962
+    image: "https://www.london-now.co.uk/resources/images/13334066.jpg?type=mds-article-962"
   },
   {
     id: '19263',
@@ -33,15 +33,15 @@ const articles = [
     date: "Nov 5th, 2021",
     description: "Examining Marvel's Eternals as a pivotal moment for representation in mainstream superhero media.",
     url: "https://www.london-now.co.uk/young-reporter/19263/",
-    image: https://www.london-now.co.uk/resources/images/13246606.jpg?type=mds-article-962
+    image: "https://www.london-now.co.uk/resources/images/13246606.jpg?type=mds-article-962"
   },
   {
     id: '19337',
-    title: "Lion Learning At Hampton School Sparks Passion in Local Primary Students", // <--- PLEASE UPDATE THIS TITLE
+    title: "Lion Learning At Hampton School Sparks Passion in Local Primary Students",
     date: "Nov 29th 2021",
     description: "Coverage of local news and student perspectives for the London Now publication.",
     url: "https://www.london-now.co.uk/young-reporter/19337/",
-    image: https://www.london-now.co.uk/resources/images/13250205.jpg?type=mds-article-962
+    image: "https://www.london-now.co.uk/resources/images/13250205.jpg?type=mds-article-962"
   },
   {
     id: '18897',
@@ -49,7 +49,7 @@ const articles = [
     date: "Oct 21st 2021",
     description: "Highlighting student-led environmental initiatives and the impact of local eco-clubs on community awareness.",
     url: "https://www.london-now.co.uk/young-reporter/18897/",
-    image: https://www.london-now.co.uk/resources/images/13127187.jpg?type=mds-article-962
+    image: "https://www.london-now.co.uk/resources/images/13127187.jpg?type=mds-article-962"
   }
 ];
 
