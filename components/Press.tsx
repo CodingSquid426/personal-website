@@ -1,0 +1,103 @@
+import React from 'react';
+import Section from './Section';
+import { Newspaper, ExternalLink, Calendar, Award, Megaphone } from 'lucide-react';
+
+const pressItems = [
+  {
+    id: 'holles-2024',
+    title: "Oxford University Lowdown: Guest Speaker",
+    source: "Holles Connect (LEH)",
+    date: "March 11, 2024",
+    description: "Featured as a special guest at the Oxford University Lunch, advising Sixth Form pupils on undergraduate life and course selection.",
+    url: "https://www.hollesconnect.org.uk/news/alumnae-news/537/537-Oxford-University-Lowdown-",
+    icon: Megaphone
+  },
+  {
+    id: 'ouccc-2023',
+    title: "II-IVs Varsity 2023 Match Report",
+    source: "Oxford University Cross Country Club",
+    date: "November 30, 2023",
+    description: "Detailed coverage of the Varsity match where the Oxford team secured a 3-2 victory over Cambridge at Priory Park.",
+    url: "https://www.ouccc.org.uk/article/ii-ivs-varsity-2023",
+    icon: Newspaper
+  },
+  {
+    id: 'regatta-2019',
+    title: "National Schools' Regatta 2019 Results",
+    source: "Time-Team / Hampton School BC",
+    date: "May 24, 2019",
+    description: "Competed in the prestigious National Schools' Regatta as part of the Hampton School Boat Club B crew (Seat 3).",
+    url: "https://regatta.time-team.nl/nsr/2019/entry/e4a3bb8b-0f22-41b1-b08a-93342be8361e.php",
+    icon: Award
+  },
+  {
+    id: 'hampton-2018',
+    title: "2018 Entrance Scholarships",
+    source: "Hampton School",
+    date: "July 5, 2018",
+    description: "Awarded the John Jones Scholarship for academic excellence upon entrance to Hampton School.",
+    url: "https://hamptonschool.org.uk/2018/07/2018-entrance-scholarships/",
+    icon: Award
+  },
+  {
+    id: 'rotary-2018',
+    title: "Rotary Prize for Environmental and Scientific Advancement",
+    source: "Rotary International (GBI)",
+    date: "March 29, 2018",
+    description: "Winner of the Rotary Prize at the Big Bang Fair for an innovative environmental science project.",
+    url: "https://www.rotarygbi.org/big-bang-rotary-award-2018/",
+    icon: Award
+  }
+];
+
+const Press: React.FC = () => {
+  return (
+    <Section 
+      id="press" 
+      title="Mentioned In News" 
+      subtitle="Media coverage, awards, and external features." 
+      className="bg-white"
+    >
+      <div className="space-y-4">
+        {pressItems.map((item) => (
+          <a 
+            key={item.id}
+            href={item.url}
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="group block bg-slate-50 hover:bg-white border border-slate-200 rounded-lg p-5 hover:shadow-md transition-all"
+          >
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="flex items-start gap-4">
+                <div className="p-3 bg-white rounded-full border border-slate-200 text-accent-teal group-hover:scale-110 transition-transform">
+                  <item.icon size={20} />
+                </div>
+                <div>
+                  <h3 className="font-serif font-bold text-lg text-slate-900 group-hover:text-accent-teal transition-colors">
+                    {item.title}
+                  </h3>
+                  <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500 font-bold uppercase tracking-wider mt-1 mb-2">
+                    <span>{item.source}</span>
+                    <span className="w-1 h-1 rounded-full bg-slate-300"></span>
+                    <span className="flex items-center gap-1">
+                      <Calendar size={10} /> {item.date}
+                    </span>
+                  </div>
+                  <p className="text-slate-600 text-sm max-w-2xl">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+              
+              <div className="flex-shrink-0 self-start sm:self-center">
+                <ExternalLink size={18} className="text-slate-400 group-hover:text-accent-teal" />
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    </Section>
+  );
+};
+
+export default Press;

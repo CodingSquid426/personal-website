@@ -10,6 +10,7 @@ const navItems = [
   { name: 'Leadership', href: '#leadership' },
   { name: 'Runner', href: '#runner' },
   { name: 'CV', href: '#cv' },
+  { name: 'Press', href: '#press' }
 ];
 
 const Navbar: React.FC = () => {
