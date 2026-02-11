@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Builder from './components/Builder';
+import GithubRepos from './components/GithubRepos';
 import Scholar from './components/Scholar';
 import Journalism from './components/Journalism';
 import Leadership from './components/Leadership';
@@ -16,6 +17,7 @@ const App: React.FC = () => {
       <main>
         <Hero />
         <Builder />
+        <GithubRepos />
         <Scholar />
         <Journalism />
         <Leadership />
