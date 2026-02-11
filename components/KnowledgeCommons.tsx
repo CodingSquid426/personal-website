@@ -16,19 +16,21 @@ const KnowledgeCommons: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
 
-  // CHANGE THIS to match your exact name on Knowledge Commons
-  const AUTHOR_QUERY = 'metadata.creators.person_or_org.name:"Mason, Edward"';
-
   useEffect(() => {
-    // Fetch from KCWorks (InvenioRDM) API
-    fetch(`https://works.hcommons.org/api/records?q=${encodeURIComponent(AUTHOR_QUERY)}&sort=newest&size=5`, {
-      headers: { 'Accept': 'application/json' }
-    })
+    // CHANGE: Fetch from your local API route instead of the external URL
+    fetch('/api/papers')
       .then(res => {
         if (!res.ok) throw new Error('Failed to fetch');
         return res.json();
       })
       .then(data => {
+        // Check if hits exist to avoid crashes
+        if (!data.hits || !data.hits.hits) {
+          setPapers([]);
+          setLoading(false);
+          return;
+        }
+
         const fetchedPapers = data.hits.hits.map((hit: any) => ({
           id: hit.id,
           title: hit.metadata.title,
@@ -47,7 +49,10 @@ const KnowledgeCommons: React.FC = () => {
       });
   }, []);
 
-  if (loading || error || papers.length === 0) return null; 
+  // DEBUGGING: Show error message if something fails
+  if (loading) return <Section id="papers" title="Publications"><div className="text-center p-4">Loading publications...</div></Section>;
+  if (error) return <Section id="papers" title="Publications"><div className="text-center p-4 text-red-500">Could not load publications.</div></Section>;
+  if (papers.length === 0) return <Section id="papers" title="Publications"><div className="text-center p-4">No publications found for Edward Mason.</div></Section>;
 
   return (
     <Section 
@@ -60,7 +65,6 @@ const KnowledgeCommons: React.FC = () => {
         {papers.map((paper) => (
           <div key={paper.id} className="group relative pl-8 border-l-2 border-slate-200 hover:border-accent-teal transition-colors">
             
-            {/* Icon Node */}
             <div className="absolute -left-[9px] top-0 bg-white">
               <div className="w-4 h-4 rounded-full border-2 border-slate-300 group-hover:border-accent-teal transition-colors"></div>
             </div>
