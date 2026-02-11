@@ -5,17 +5,17 @@ import { Smartphone, TrendingUp, Users, Heart, Play, BarChart2, ExternalLink } f
 const contentStats = [
   {
     label: "Followers",
-    value: "20.5K+", // Update this with your actual follower count
+    value: "100+", // Update this with your actual follower count
     icon: <Users size={20} />
   },
   {
     label: "Total Likes",
-    value: "1.2M+", // Update this with your actual total likes
+    value: "1K+", // Update this with your actual total likes
     icon: <Heart size={20} />
   },
   {
-    label: "Avg. Engagement",
-    value: "8.5%", // Update based on your analytics
+    label: "Yearly Views",
+    value: "117k", // Update based on your analytics
     icon: <BarChart2 size={20} />
   }
 ];
