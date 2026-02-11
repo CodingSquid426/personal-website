@@ -1,6 +1,6 @@
 import React from 'react';
 import Section from './Section';
-import { Briefcase, GraduationCap, Download, Calendar, ArrowRight, Award, TrendingUp, Globe, Users } from 'lucide-react';
+import { Briefcase, GraduationCap, Download, Calendar, ArrowRight, Award, TrendingUp, Globe, Users, BookOpen } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 // Data sourced from your uploaded CVs
@@ -96,21 +96,32 @@ const Resume: React.FC = () => {
       <div className="max-w-5xl mx-auto">
         
         {/* Header / Download Actions */}
-        <div className="flex justify-end mb-12">
+        <div className="flex flex-col md:flex-row justify-between items-end md:items-center mb-8 gap-4">
+           {/* Prominent Oxford Status */}
+           <div className="flex items-center gap-3 bg-blue-50 border border-blue-100 px-5 py-3 rounded-xl shadow-sm w-full md:w-auto">
+             <div className="bg-oxford text-white p-2 rounded-lg">
+               <BookOpen size={20} />
+             </div>
+             <div>
+               <h4 className="font-serif font-bold text-oxford text-lg leading-none">Finalist, University of Oxford</h4>
+               <p className="text-sm text-slate-600 font-medium mt-1">BA English Language & Literature • Graduating June 2026</p>
+             </div>
+           </div>
+
            <a 
-             href="/CV_AI_Jan_2026.docx" // Assuming this is where the file will be served from
+             href="/CV_AI_Jan_2026.docx"
              download
-             className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all group"
+             className="flex items-center gap-2 bg-slate-900 text-white px-6 py-3 rounded-full font-bold shadow-lg hover:shadow-xl hover:scale-105 transition-all group whitespace-nowrap"
            >
              <Download size={18} className="group-hover:animate-bounce" />
              Download Full CV
            </a>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8"> {/* Reduced gap from 12 to 8 */}
           
           {/* Left Column: Experience Timeline */}
-          <div className="lg:col-span-8 space-y-8 relative">
+          <div className="lg:col-span-8 space-y-6 relative"> {/* Reduced space-y from 8 to 6 */}
             <div className="absolute left-8 top-4 bottom-4 w-0.5 bg-slate-200 hidden md:block"></div>
             
             {experiences.map((job, index) => (
@@ -133,11 +144,13 @@ const Resume: React.FC = () => {
                 <div className="flex-grow bg-slate-50 hover:bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300">
                   <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
                     <div>
+                      {/* Swapped: Company Name is now H3 (Prominent) */}
                       <h3 className="text-xl font-bold text-slate-900 group-hover:text-accent-teal transition-colors">
-                        {job.role}
-                      </h3>
-                      <div className="text-sm font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
                         {job.company}
+                      </h3>
+                      {/* Swapped: Role is now subtext */}
+                      <div className="text-sm font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+                        {job.role}
                       </div>
                     </div>
                     <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-white border border-slate-200 text-slate-600 shadow-sm whitespace-nowrap">
