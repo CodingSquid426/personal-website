@@ -45,7 +45,7 @@ const WikipediaEdits: React.FC = () => {
   const featuredTitles = [
     "The_Muppet_Show_(2026_TV_special)",
     "Star_(Disney+)",
-    "Block_by_Block_(program)"
+    "Minecraft (franchise)"
   ];
 
   const toggleDay = (date: string) => {
